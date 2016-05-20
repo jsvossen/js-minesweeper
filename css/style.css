@@ -9,6 +9,25 @@ header, main, footer { max-width: 500px; margin: auto; padding: 20px 0;}
 header { text-align: center; }
 h1 { font-size: 25px; }
 
+#board { width: 225px; margin: auto; border: 1px solid #999; }
+
+#board:after {
+	content: " ";
+	height: 0;
+	display: block;
+	clear: both;
+}
+
+.cell {
+	-webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box;   
+    box-sizing: border-box;
+    width: 25px;
+    height: 25px;
+    float: left;
+    text-align: center;
+    border: 2px outset #ccc;
+}
 
 
 footer {

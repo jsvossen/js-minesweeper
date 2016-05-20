@@ -6,6 +6,13 @@
 		<link rel="stylesheet" href="css/style.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 		<script type="text/javascript" src="js/minesweeper.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){ 
+				var ms = $.minesweeper();
+				ms.init();
+				console.log(ms.data);
+			});
+		</script>
 	</head>
 
 	<body>
