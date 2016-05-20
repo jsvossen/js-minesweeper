@@ -15,12 +15,32 @@
 						thisGrid.data[row].push("");
 					}
 				}		
+			},
+			flagCell: function(cell) {
+				if ( !$(cell).hasClass('cleared') ) {
+					$(cell).toggleClass('flag');
+				}
+			},
+			clearCell: function(cell) {
+				if ( !$(cell).hasClass('flag') ) {
+					$(cell).addClass('cleared');
+				}
 			}
 		}
 
 		return {
 			data: grid.data,
-			init: function() { grid.init(); }
+			init: function() { 
+				grid.init();
+				$('.cell').on("contextmenu", function(event){
+					event.preventDefault();
+					grid.flagCell(this);
+				});
+				$('.cell').click(function(event) {
+					event.preventDefault();
+					grid.clearCell(this);
+				});
+			}
 		}
 	}
 

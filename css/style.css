@@ -24,9 +24,20 @@ h1 { font-size: 25px; }
     box-sizing: border-box;
     width: 25px;
     height: 25px;
+    line-height: 22px;
     float: left;
     text-align: center;
     border: 2px outset #ccc;
+    font-size: 14px;
+}
+
+.cell.cleared {
+    border: 0;
+    background: #eee;
+}
+
+.cell.flag:after {
+    content: "\2691";
 }
 
 
