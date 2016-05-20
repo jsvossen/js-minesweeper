@@ -39,6 +39,13 @@ h1 { font-size: 25px; }
 .cell.flag:after {
     content: "\2691";
 }
+.cell.mine:after {
+    content: "\2620";
+    margin-top: 3px;
+    margin-right: 3px;
+    font-size: 16px;
+    display: block;
+}
 
 
 footer {
