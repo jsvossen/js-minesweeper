@@ -46,6 +46,15 @@ h1 { font-size: 25px; }
     font-size: 16px;
     display: block;
 }
+.cell.clue { color: blue; }
+.cell.m1:after { content: "1"; }
+.cell.m2:after { content: "2"; }
+.cell.m3:after { content: "3"; }
+.cell.m4:after { content: "4"; }
+.cell.m5:after { content: "5"; }
+.cell.m6:after { content: "6"; }
+.cell.m7:after { content: "7"; }
+.cell.m8:after { content: "8"; }
 
 
 footer {

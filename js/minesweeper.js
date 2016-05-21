@@ -34,8 +34,8 @@
 				var row = $(cell).parent().attr('data-row');
 				var col = $(cell).attr('data-col');
 				return {
-					row: row,
-					col: col
+					row: parseInt(row),
+					col: parseInt(col)
 				}
 			},
 			hasMine: function(cell) {
@@ -48,17 +48,56 @@
 				}
 			},
 			clearCell: function(cell) {
-				if ( !$(cell).hasClass('flag') ) {
+				var thisGrid = this;
+				if ( !$(cell).hasClass('flag') && !$(cell).hasClass('cleared') ) {
 					$(cell).addClass('cleared');
 					if ( this.hasMine(cell) ) {
 						$(cell).addClass('mine');
+					} else {
+						var mines = this.mineCount(cell);
+						if (mines > 0) { 
+							$(cell).addClass("clue m"+mines);
+						} else {
+							$.each( this.getAdjacent(cell), function(i,nextCell) {
+								thisGrid.clearCell(nextCell);
+							});
+						}
+
 					}
+
 				}
+			},
+			getAdjacent: function(cell) {
+				var thisGame = this;
+				var coords = this.getCoords(cell);
+				var newCoords = [
+					[coords.row+1,coords.col+1],
+					[coords.row-1,coords.col-1],
+					[coords.row+1,coords.col-1],
+					[coords.row-1,coords.col+1],
+					[coords.row,coords.col+1],
+					[coords.row,coords.col-1],
+					[coords.row+1,coords.col],
+					[coords.row-1,coords.col],
+				];
+				var adjacent = [];
+				$.each(newCoords, function(i,coord){
+					nextCell = thisGame.getCell(coord[0],coord[1]);
+					if ( nextCell.length>0 ) adjacent.push(nextCell);
+				});
+				return adjacent;
+			},
+			mineCount: function(cell) {
+				var thisGrid = this;
+				var mines = 0;
+				$.each( this.getAdjacent(cell), function(i,nextCell) {
+					if ( thisGrid.hasMine(nextCell) ) mines++;
+				});
+				return mines;
 			}
 		}
 
 		return {
-			data: grid.data,
 			init: function() { 
 				grid.init();
 				grid.populate(10);
