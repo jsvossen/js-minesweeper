@@ -2,6 +2,10 @@
 
 	$.minesweeper = function() {
 
+		var game = {
+			inProgress: false
+		};
+
 		var grid = {
 			size: 9,
 			data: [],
@@ -145,14 +149,18 @@
 				stats.init();
 				grid.populate(10);
 				$('.cell').on("contextmenu", function(event){
-					if (!timer.enabled) { timer.start(); }
-					event.preventDefault();
-					grid.flagCell(this);
+					if (!game.inProgress) { timer.start(); game.inProgress = true; }
+					if (timer.enabled) {
+						event.preventDefault();
+						grid.flagCell(this);
+					}
 				});
 				$('.cell').click(function(event) {
-					if (!timer.enabled) { timer.start(); }
-					event.preventDefault();
-					grid.clearCell(this);
+					if (!game.inProgress) { timer.start(); game.inProgress = true; }
+					if (timer.enabled) {
+						event.preventDefault();
+						grid.clearCell(this);
+					}
 				});
 			}
 		};
