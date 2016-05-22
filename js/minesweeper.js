@@ -3,6 +3,9 @@
 	$.minesweeper = function() {
 
 		var game = {
+			level: 1,
+			mines: 10,
+			flags: 0,
 			inProgress: false,
 			lose: function() {
 				$('.cell').each(function(cell) {
@@ -148,16 +151,17 @@
 				stats.init();
 				grid.populate(10);
 				$('.cell').on("contextmenu", function(event){
+					event.preventDefault();
 					if (!game.inProgress) { timer.start(); game.inProgress = true; }
-					if (timer.enabled) {
-						event.preventDefault();
+					if (timer.enabled && game.flags < game.mines) {
 						grid.flagCell(this);
+						game.flags++;
 					}
 				});
 				$('.cell').click(function(event) {
+					event.preventDefault();
 					if (!game.inProgress) { timer.start(); game.inProgress = true; }
 					if (timer.enabled) {
-						event.preventDefault();
 						grid.clearCell(this);
 					}
 				});
