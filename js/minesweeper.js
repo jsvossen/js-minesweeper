@@ -3,7 +3,13 @@
 	$.minesweeper = function() {
 
 		var game = {
-			inProgress: false
+			inProgress: false,
+			lose: function() {
+				$('.cell').each(function(cell) {
+					if (grid.hasMine(this)) { grid.clearCell(this); }
+				});
+				timer.stop();
+			}
 		};
 
 		var grid = {
@@ -57,7 +63,7 @@
 					$(cell).addClass('cleared');
 					if ( this.hasMine(cell) ) {
 						$(cell).addClass('mine');
-						die();
+						game.lose();
 					} else {
 						var mines = this.mineCount(cell);
 						if (mines > 0) { 
@@ -121,13 +127,6 @@
 				this.enabled = false;
 				clearInterval(this.timerId);
 			}
-		};
-
-		var die = function() {
-			$('.cell').each(function(cell) {
-				if (grid.hasMine(this)) { grid.clearCell(this); }
-			});
-			timer.stop();
 		};
 
 		var stats = {
