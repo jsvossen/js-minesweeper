@@ -95,22 +95,59 @@
 				});
 				return mines;
 			}
-		}
+		};
+
+		var timer = {
+			interval: 1000,
+			enabled: false,
+			timerId: 0,
+			start: function() {
+				var thisTimer = this;
+				thisTimer.enabled = true;
+				var t = 0;
+				if (thisTimer.enabled) {
+					thisTimer.timerId = setInterval(function(){
+						t++;
+						stats.updateClock(t);
+					}, thisTimer.interval);
+				}
+			},
+			stop: function() {
+				this.enabled = false;
+				clearInterval(this.timerId);
+			}
+		};
+
+		var stats = {
+			init: function() {
+				$('#stats').append('<div id="timer">00:00</div>');
+			},
+			updateClock: function(seconds) {
+				var min = Math.floor(seconds/60);
+				var sec = seconds % 60;
+				min = (min < 10) ? "0"+min : min;
+				sec = (sec < 10) ? "0"+sec : sec;
+				$('#timer').text(min+':'+sec);
+			}
+		};
 
 		return {
 			init: function() { 
 				grid.init();
+				stats.init();
 				grid.populate(10);
 				$('.cell').on("contextmenu", function(event){
 					event.preventDefault();
 					grid.flagCell(this);
+					if (!timer.enabled) { timer.start (); }
 				});
 				$('.cell').click(function(event) {
 					event.preventDefault();
 					grid.clearCell(this);
+					if (!timer.enabled) { timer.start (); }
 				});
 			}
-		}
+		};
 	}
 
 })(jQuery);

@@ -9,9 +9,9 @@ header, main, footer { max-width: 500px; margin: auto; padding: 20px 0;}
 header { text-align: center; }
 h1 { font-size: 25px; }
 
-#board { width: 225px; margin: auto; border: 1px solid #999; }
+#board { width: 225px; margin: auto; border: 1px solid #999;}
 
-#board:after {
+#board:after, #stats:after {
 	content: " ";
 	height: 0;
 	display: block;
@@ -55,6 +55,13 @@ h1 { font-size: 25px; }
 .cell.m6:after { content: "6"; }
 .cell.m7:after { content: "7"; }
 .cell.m8:after { content: "8"; }
+
+#stats {
+    width: 225px;
+    margin: 10px auto;
+}
+
+#timer { float: right; }
 
 
 footer {
