@@ -154,6 +154,8 @@
 		var stats = {
 			init: function() {
 				$('#stats').append('<div id="timer">00:00</div>');
+				$('#stats').append('<div id="flags">Mines: <span class="count"></span></div>');
+				this.updateCount();
 			},
 			updateClock: function(seconds) {
 				var min = Math.floor(seconds/60);
@@ -161,6 +163,10 @@
 				min = (min < 10) ? "0"+min : min;
 				sec = (sec < 10) ? "0"+sec : sec;
 				$('#timer').text(min+':'+sec);
+			},
+			updateCount: function() {
+				var count = game.mines-game.flags;
+				$('#flags .count').text(count);
 			}
 		};
 
@@ -168,13 +174,14 @@
 			init: function() { 
 				grid.init();
 				stats.init();
-				grid.populate(10);
+				grid.populate(game.mines);
 				$('.cell').on("contextmenu", function(event){
 					event.preventDefault();
 					if (!game.inProgress) { timer.start(); game.inProgress = true; }
 					if (timer.enabled && game.flags < game.mines) {
 						grid.flagCell(this);
 						game.flags++;
+						stats.updateCount();
 						game.winCheck();
 					}
 				});
