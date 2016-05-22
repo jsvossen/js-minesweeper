@@ -12,6 +12,25 @@
 					if (grid.hasMine(this)) { grid.clearCell(this); }
 				});
 				timer.stop();
+			},
+			winCheck: function() {
+				if (this.flagCheck()) {
+					timer.stop();
+					$('.cell').each(function(cell) { grid.clearCell(this); });
+				}
+			},
+			flagCheck: function() {
+				var winner = false;
+				if ( this.flags == this.mines ) {
+					winner = true;
+					$('.cell.flag').each(function(flag){
+						if (!grid.hasMine(this)) {
+							winner = false;
+							return false;
+						}
+					});
+				}
+				return winner;
 			}
 		};
 
@@ -156,6 +175,7 @@
 					if (timer.enabled && game.flags < game.mines) {
 						grid.flagCell(this);
 						game.flags++;
+						game.winCheck();
 					}
 				});
 				$('.cell').click(function(event) {
@@ -163,6 +183,7 @@
 					if (!game.inProgress) { timer.start(); game.inProgress = true; }
 					if (timer.enabled) {
 						grid.clearCell(this);
+						game.winCheck();
 					}
 				});
 			}
