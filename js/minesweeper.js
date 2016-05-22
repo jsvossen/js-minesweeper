@@ -53,6 +53,7 @@
 					$(cell).addClass('cleared');
 					if ( this.hasMine(cell) ) {
 						$(cell).addClass('mine');
+						die();
 					} else {
 						var mines = this.mineCount(cell);
 						if (mines > 0) { 
@@ -118,6 +119,13 @@
 			}
 		};
 
+		var die = function() {
+			$('.cell').each(function(cell) {
+				if (grid.hasMine(this)) { grid.clearCell(this); }
+			});
+			timer.stop();
+		};
+
 		var stats = {
 			init: function() {
 				$('#stats').append('<div id="timer">00:00</div>');
@@ -137,14 +145,14 @@
 				stats.init();
 				grid.populate(10);
 				$('.cell').on("contextmenu", function(event){
+					if (!timer.enabled) { timer.start(); }
 					event.preventDefault();
 					grid.flagCell(this);
-					if (!timer.enabled) { timer.start (); }
 				});
 				$('.cell').click(function(event) {
+					if (!timer.enabled) { timer.start(); }
 					event.preventDefault();
 					grid.clearCell(this);
-					if (!timer.enabled) { timer.start (); }
 				});
 			}
 		};
