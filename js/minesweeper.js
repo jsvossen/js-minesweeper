@@ -12,11 +12,13 @@
 					if (grid.hasMine(this)) { grid.clearCell(this); }
 				});
 				timer.stop();
+				$("#gameover .message").text("Game over!");
 			},
 			winCheck: function() {
 				if (this.flagCheck()) {
 					timer.stop();
 					$('.cell').each(function(cell) { grid.clearCell(this); });
+					$("#gameover .message").text("You win!");
 				}
 			},
 			flagCheck: function() {

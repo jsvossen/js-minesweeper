@@ -4,10 +4,12 @@ body {
 	font-family: "Myraid Pro", Arial, sans-serif;
 }
 
-header, main, footer { max-width: 500px; margin: auto; padding: 20px 0;}
+header, footer { max-width: 500px; margin: auto; padding: 20px 0;}
 
 header { text-align: center; }
 h1 { font-size: 25px; }
+
+#gameover { color: red; margin: 10px 0; }
 
 #board { width: 225px; margin: auto; border: 1px solid #999;}
 
