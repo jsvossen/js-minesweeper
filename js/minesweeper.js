@@ -7,6 +7,12 @@
 			mines: 10,
 			flags: 0,
 			inProgress: false,
+			init: function() {
+				thisGame = this;
+				grid.init();
+				stats.init();
+				grid.populate(thisGame.mines);
+			},
 			lose: function() {
 				$('.cell').each(function(cell) {
 					if (grid.hasMine(this)) { grid.clearCell(this); }
@@ -155,8 +161,7 @@
 
 		var stats = {
 			init: function() {
-				$('#stats').append('<div id="timer">00:00</div>');
-				$('#stats').append('<div id="flags">Mines: <span class="count"></span></div>');
+				$('#timer').text('00:00');
 				this.updateCount();
 			},
 			updateClock: function(seconds) {
@@ -173,10 +178,8 @@
 		};
 
 		return {
-			init: function() { 
-				grid.init();
-				stats.init();
-				grid.populate(game.mines);
+			init: function() {
+				game.init();
 				$('.cell').on("contextmenu", function(event){
 					event.preventDefault();
 					if (!game.inProgress) { timer.start(); game.inProgress = true; }
@@ -187,7 +190,7 @@
 						game.winCheck();
 					}
 				});
-				$('.cell').click(function(event) {
+				$('.cell').on("click",function(event) {
 					event.preventDefault();
 					if (!game.inProgress) { timer.start(); game.inProgress = true; }
 					if (timer.enabled) {

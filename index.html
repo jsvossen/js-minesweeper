@@ -10,7 +10,6 @@
 			$(document).ready(function(){ 
 				var ms = $.minesweeper();
 				ms.init();
-				console.log(ms.data);
 			});
 		</script>
 	</head>
@@ -24,6 +23,8 @@
 
 		<main>
 			<div id="stats">
+				<div id="timer"></div>
+				<div id="flags">Mines: <span class="count"></span></div>
 			</div>
 			<div id="board">
 			</div>
