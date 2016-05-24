@@ -48,6 +48,26 @@
 					});
 				}
 				return winner;
+			},
+			changeLevel: function(level) {
+				this.level = parseInt(level);
+				switch(this.level) {
+					case 1:
+						grid.size = 9;
+						this.mines = 10;
+						break;
+					case 2:
+						grid.size = 14;
+						this.mines = 30;
+						break;
+					case 3:
+						grid.size = 18;
+						this.mines = 60;
+						break;
+				}
+				console.log(this, grid.size);
+				$('#board').css("width", grid.size * $('.cell').outerWidth() );
+				this.reset();
 			}
 		};
 
@@ -210,6 +230,10 @@
 				$('a.reset').click(function(event){
 					event.preventDefault();
 					game.reset();
+				});
+				$('select#level').change(function(event){
+					console.log(this.value);
+					game.changeLevel(this.value);
 				});
 			}
 		};
