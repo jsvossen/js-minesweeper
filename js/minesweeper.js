@@ -13,6 +13,15 @@
 				stats.init();
 				grid.populate(thisGame.mines);
 			},
+			reset: function() {
+				$('#board').empty();
+				$('#gameover .message').text("");
+				grid.data = [];
+				timer.stop();
+				this.flags = 0;
+				this.inProgress = false;
+				this.init();
+			},
 			lose: function() {
 				$('.cell').each(function(cell) {
 					if (grid.hasMine(this)) { grid.clearCell(this); }
@@ -180,7 +189,7 @@
 		return {
 			init: function() {
 				game.init();
-				$('.cell').on("contextmenu", function(event){
+				$('#board').on('contextmenu', '.cell', function(event){
 					event.preventDefault();
 					if (!game.inProgress) { timer.start(); game.inProgress = true; }
 					if (timer.enabled && game.flags < game.mines) {
@@ -190,13 +199,17 @@
 						game.winCheck();
 					}
 				});
-				$('.cell').on("click",function(event) {
+				$('#board').on('click', '.cell', function(event) {
 					event.preventDefault();
 					if (!game.inProgress) { timer.start(); game.inProgress = true; }
 					if (timer.enabled) {
 						grid.clearCell(this);
 						game.winCheck();
 					}
+				});
+				$('a.reset').click(function(event){
+					event.preventDefault();
+					game.reset();
 				});
 			}
 		};
