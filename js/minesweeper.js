@@ -112,8 +112,11 @@
 				return this.data[coords.row][coords.col];
 			},
 			flagCell: function(cell) {
-				if ( !$(cell).hasClass('cleared') ) {
-					$(cell).toggleClass('flag');
+				if ( !$(cell).hasClass('cleared') && !$(cell).hasClass('flag') ) {
+					if (game.flags < game.mines) $(cell).addClass('flag');
+				}
+				else if ( $(cell).hasClass('flag') ) {
+					$(cell).removeClass('flag');
 				}
 			},
 			clearCell: function(cell) {
@@ -212,9 +215,9 @@
 				$('#board').on('contextmenu', '.cell', function(event){
 					event.preventDefault();
 					if (!game.inProgress) { timer.start(); game.inProgress = true; }
-					if (timer.enabled && game.flags < game.mines) {
+					if (timer.enabled) {
 						grid.flagCell(this);
-						game.flags++;
+						game.flags = $('.cell.flag').length;
 						stats.updateCount();
 						game.winCheck();
 					}
